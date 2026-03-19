@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Prospecção</title>
+<style>
+body { font-family: Arial; background:#f4f4f4; }
+.container { max-width:500px; margin:auto; background:#fff; padding:20px; border-radius:10px; }
+input, select, textarea, button { width:100%; margin-top:10px; padding:10px; }
+button { background:#007BFF; color:#fff; border:none; }
+.msg { text-align:center; margin-top:10px; }
+</style>
+<header style="text-align: center; padding: 20px;">
+
+  <img src="unipampa.png" alt="Logo da empresa" width="250">
+
+  <h1>Práticas Extensionistas I</h1>
+
+</header>
+
+</head>
+
+<body>
+<div class="container">
+  <h2>Formulário de Prospecção de Projeto</h2>
+
+  <form id="form">
+    <!-- Dados do cliente -->
+    <label>Nome completo</label>
+    <input type="text" name="nome" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Empresa</label>
+    <input type="text" name="empresa" required>
+
+    <label>Telefone</label>
+    <input type="tel" name="telefone" required>
+
+    <!-- Informações do projeto -->
+    <label>Tipo de projeto</label>
+    <select name="tipo">
+      <option>Website</option>
+      <option>Sistema Web</option>
+      <option>Aplicativo</option>
+      <option>Automação</option>
+      <option>Outro</option>
+    </select>
+
+    <label>Objetivo principal</label>
+    <textarea name="objetivo" rows="3"></textarea>
+
+    <label>Descreva o projeto</label>
+    <textarea name="descricao" rows="4"></textarea>
+
+    <label>Público Alvo</label>
+    <input type="text" name="publico">
+
+    <label>Prazo desejado</label>
+    <input type="date" name="prazo">
+
+    <label>Já possui algo pronto?</label>
+    <select name="material">
+      <option>Não</option>
+      <option>Sim, parcialmente</option>
+      <option>Sim, completo</option>
+    </select>
+
+    <label>Observações adicionais</label>
+    <textarea name="obs" rows="3"></textarea>
+
+    <button type="submit">Enviar</button>
+    </form>
+
+    <div class="msg" id="msg"></div>
+</div>
+
+<script>
+const form = document.getElementById('form');
+const msg = document.getElementById('msg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = Object.fromEntries(new FormData(form));
+
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbxO_sm7HcBnDRFLsnqtPls7IF1ATv5ofeoyemYx9PyDOYiKu973AWpBhaZ7TaPinQfP-Q/exec", {
+    method: "POST",
+    headers: {
+       "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data),
+	mode: 'no-cors'
+  });
+
+    msg.innerText = "Enviado com sucesso!";
+    form.reset();
+  } catch(err) {
+    msg.innerText = "Erro ao enviar.";
+	console.error(err);
+  }
+});
+</script>
+
+</body>
+</html>
